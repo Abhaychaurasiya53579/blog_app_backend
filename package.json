@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -10,7 +10,7 @@
   },
   "engines": {
     "node": ">=NODE_JS_VERSION"
-},
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
