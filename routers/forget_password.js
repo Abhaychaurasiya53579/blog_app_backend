@@ -26,7 +26,7 @@ forget_password_router.post('/', async (req, res) => {
         from: 'sunn53579@gmail.com',
         to: email,
         subject: 'Password Reset',
-        text: `Click the following link to reset your password: http://localhost:3000/reset_password/${reset_token}`
+        text: `Click the following link to reset your password: https://blog-abh-backend.onrender.com/${reset_token}`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
