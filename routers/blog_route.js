@@ -1,6 +1,6 @@
 import express from "express";
 import blog from "../models/blog_schema.js";
-import middle from "../middleware/auth.js";
+import getauth from "../middleware/auth.js";
 
 
 
@@ -9,7 +9,7 @@ const response =(res,status,result)=>{
     res.status(status).json(result);
 }
 
-blog_route.post("/create",middle.getauth,async(req,res)=>{
+blog_route.post("/create",getauth,async(req,res)=>{
     
     try{
         console.log(req.body);
@@ -28,7 +28,7 @@ res.status(202).json({err});
    }
 })
 
-blog_route.put("/update/:id",middle.getauth,async (req,res)=>{
+blog_route.put("/update/:id",getauth,async (req,res)=>{
 const {tittle,content,image}=req.body;
 await blog.findOneAndUpdate({_id :req.params.id},{tittle,content,image})
 .then((result)=>res.json(result))
@@ -36,7 +36,7 @@ await blog.findOneAndUpdate({_id :req.params.id},{tittle,content,image})
 
 })
 
-blog_route.get("/find",middle.getauth,async (req,res)=>{
+blog_route.get("/find",getauth,async (req,res)=>{
     
     await blog.find().populate("user").sort("-createdon")
     .then(result=>res.json(result))
@@ -44,7 +44,7 @@ blog_route.get("/find",middle.getauth,async (req,res)=>{
     
     })
 
-    blog_route.get("/user/find",middle.getauth,async (req,res)=>{
+    blog_route.get("/user/find",getauth,async (req,res)=>{
     try{
         return res.json({id:req.user_id})
     }
@@ -53,9 +53,7 @@ blog_route.get("/find",middle.getauth,async (req,res)=>{
         
         })
 
-    blog_route.delete("/del/:id",middle.getauth,async (req,res)=>{
-    console.log("abhay");
-    console.log("abhay");
+    blog_route.delete("/del/:id",getauth,async (req,res)=>{
       try{
         console.log("abhay");
         const selected_blog =await blog.findById(req.params.id);
@@ -77,7 +75,7 @@ blog_route.get("/find",middle.getauth,async (req,res)=>{
         })
 
 
-        blog_route.get("/:id",middle.getauth,async (req,res)=>{
+        blog_route.get("/:id",getauth,async (req,res)=>{
             console.log("update_arrived");
            const found_blog= blog.findById(req.params.id)
             

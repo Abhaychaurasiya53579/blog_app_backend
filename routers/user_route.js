@@ -4,7 +4,7 @@ import user from "../models/user_schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from"dotenv";
-import middle from "../middleware/auth.js";
+import getauth from "../middleware/auth.js";
 dotenv.config();
 
  const user_router = express.Router();
@@ -70,7 +70,7 @@ user_router.get("/find" ,async(req,res)=>{
  })
 
 
- user_router.get("/auth",middle.getauth,(req,res)=>{
+ user_router.get("/auth",getauth,(req,res)=>{
   res.status(200).json(req.user_found);
  })
 

@@ -40,4 +40,4 @@ return res;
 }
 
 
-export default {getauth,reset_password};
+export default getauth;
