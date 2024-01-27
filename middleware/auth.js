@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken";
+import express from "express";
+import mongoose from "mongoose"
 import user from "../models/user_schema.js";
 
 const response=(res,status,value)=>{
@@ -26,4 +28,16 @@ response(res,202,{error:"unautorized"});
 }
 }
 
-export default getauth;
+
+const reset_password= async(req,res,next)=>{
+const existinguser= user.findOne({email:req.body.email});
+
+if(!existinguser)return res.status(202).json({msg:"unauthorized"});
+
+// const reset_token = existinguser.create_reset_password_token();
+return res;
+
+}
+
+
+export default {getauth,reset_password};

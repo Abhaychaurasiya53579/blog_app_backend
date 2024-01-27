@@ -4,7 +4,7 @@ import user from "../models/user_schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from"dotenv";
-import getauth from "../middleware/auth.js";
+import middle from "../middleware/auth.js";
 dotenv.config();
 
  const user_router = express.Router();
@@ -23,16 +23,16 @@ user_router.get("/find" ,async(req,res)=>{
  user_router.post("/create",async(req,res)=>{
     try{
       
-      const {name,email,password}=req.body;
+      const {email,password}=req.body;
       const existinguser= await user.findOne({email:email});
-    if(existinguser)res.status(401).json("email already exist")
+    if(existinguser)res.status(401).json({msg:"old_user"})
       else{
       console.log(req.body);
 
-      console.log("arrived");
+      console.log("arrived2");
         
         const hashpassword = await bcrypt.hash(password,10);
-     const new_user=  await user.create({name,email,password:hashpassword})
+     const new_user=  await user.create({email,password:hashpassword})
      console.log(new_user);
         res.json({msg:"user created"})
       }
@@ -44,8 +44,10 @@ user_router.get("/find" ,async(req,res)=>{
 
  user_router.post("/login",async(req,res)=>{
     try{
+      
         const {email,password}=req.body;
       const existinguser= await user.findOne({email:email});
+      console.log(existinguser)
       
       if(!existinguser)res.status(404).json({msg:"user not found"})
       else{
@@ -68,7 +70,7 @@ user_router.get("/find" ,async(req,res)=>{
  })
 
 
- user_router.get("/auth",getauth,(req,res)=>{
+ user_router.get("/auth",middle.getauth,(req,res)=>{
   res.status(200).json(req.user_found);
  })
 
