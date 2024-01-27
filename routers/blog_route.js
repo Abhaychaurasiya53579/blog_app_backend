@@ -75,7 +75,7 @@ blog_route.get("/find",getauth,async (req,res)=>{
         })
 
 
-        blog_route.get("/:id",async (req,res)=>{
+        blog_route.get("/:id",getauth,async (req,res)=>{
             console.log("update_arrived");
            const found_blog= blog.findById(req.params.id)
             
